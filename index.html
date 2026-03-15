@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GPS Tracker · KMZ Export</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Barlow+Condensed:wght@300;400;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
+          </svg>
+        </div>
+        <div>
+          <span class="brand-name">GEOTRACK</span>
+          <span class="brand-sub">/ KMZ EXPORTER</span>
+        </div>
+      </div>
+      <div class="status-pill" id="gpsStatusPill">
+        <span class="status-dot"></span>
+        <span id="gpsStatusText">DETENIDO</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Layout -->
+  <main class="layout">
+
+    <!-- Left Panel: Controls + Stats -->
+    <aside class="panel panel-controls">
+
+      <!-- File Name -->
+      <section class="control-group">
+        <label class="field-label">NOMBRE DEL ARCHIVO</label>
+        <div class="input-wrap">
+          <input type="text" id="fileName" class="field-input" value="ruta_gps" placeholder="ruta_gps" maxlength="60" />
+          <span class="input-ext">.kmz</span>
+        </div>
+      </section>
+
+      <!-- Action Buttons -->
+      <section class="control-group">
+        <label class="field-label">CONTROL</label>
+        <div class="btn-group">
+          <button id="btnStart" class="btn btn-start">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+            INICIAR SEGUIMIENTO
+          </button>
+          <button id="btnStop" class="btn btn-stop" disabled>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16"/></svg>
+            DETENER
+          </button>
+          <button id="btnExport" class="btn btn-export" disabled>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            EXPORTAR KMZ
+          </button>
+        </div>
+      </section>
+
+      <!-- Stats -->
+      <section class="control-group">
+        <label class="field-label">MÉTRICAS</label>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-value" id="statPoints">0</span>
+            <span class="stat-label">PUNTOS</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value" id="statDistance">0.0</span>
+            <span class="stat-label">DIST (m)</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value" id="statAccuracy">—</span>
+            <span class="stat-label">PREC (m)</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value" id="statDuration">00:00</span>
+            <span class="stat-label">TIEMPO</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Last Coordinate -->
+      <section class="control-group">
+        <label class="field-label">ÚLTIMA COORDENADA</label>
+        <div class="coord-display">
+          <div class="coord-row">
+            <span class="coord-key">LAT</span>
+            <span class="coord-val" id="lastLat">—</span>
+          </div>
+          <div class="coord-row">
+            <span class="coord-key">LON</span>
+            <span class="coord-val" id="lastLon">—</span>
+          </div>
+          <div class="coord-row">
+            <span class="coord-key">ALT</span>
+            <span class="coord-val" id="lastAlt">—</span>
+          </div>
+          <div class="coord-row">
+            <span class="coord-key">UTC</span>
+            <span class="coord-val" id="lastTime">—</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Log -->
+      <section class="control-group log-section">
+        <label class="field-label">LOG DE EVENTOS</label>
+        <div class="log-area" id="logArea"></div>
+      </section>
+
+    </aside>
+
+    <!-- Right Panel: Map -->
+    <div class="panel panel-map">
+      <div id="map"></div>
+      <div class="map-overlay-label">VISTA EN TIEMPO REAL</div>
+    </div>
+
+  </main>
+
+  <!-- Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
